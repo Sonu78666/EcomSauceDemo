@@ -1,0 +1,11 @@
+<!DOCTYPE suite System "https://testng.org/testng-1.0.dtd">
+<suite name="EcomSuite" parllel="false">
+    <listeners>
+        <listner class-name="Utils.RetryListener" />
+    </listeners>>
+    <test name="EcomTests">
+        <classes>
+            <class name="Runners.TestRunner" />
+        </classes>
+    </test>
+</suite>

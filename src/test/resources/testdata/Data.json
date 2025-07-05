@@ -1,0 +1,32 @@
+{
+  "TC_01": {
+    "products": [
+      "Sauce Labs Backpack",
+      "Sauce Labs Bike Light",
+      "Sauce Labs Bolt T-Shirt"
+    ]
+  },
+  "TC_02": {
+    "products": [
+      "Sauce Labs Backpack",
+      "Sauce Labs Bike Light"
+    ],
+    "prices": {
+      "Sauce Labs Backpack": "29.99",
+      "Sauce Labs Bike Light": "9.99"
+    }
+  },
+  "TC_03": {
+    "products": ["Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt"],
+    "firstName": "John",
+    "lastName": "Doe",
+    "postalCode": "12345",
+    "itemTotal": "45.98",
+    "tax": "3.68",
+    "total": "49.66"
+  }
+}
+
+
+
+
