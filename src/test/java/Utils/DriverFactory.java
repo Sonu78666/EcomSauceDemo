@@ -6,12 +6,15 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DriverFactory {
 
+    private static final Logger logger = LoggerFactory.getLogger(DriverFactory.class);
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
@@ -19,8 +22,9 @@ public class DriverFactory {
     }
 
     public static void setDriver() {
-        String browser = System.getProperty("browser","chrome").toLowerCase();
+        String browser = System.getProperty("browser", "chrome").toLowerCase();
         WebDriver drv;
+        try {
         switch (browser) {
             case "firefox":
                 drv = new FirefoxDriver();
@@ -53,8 +57,14 @@ public class DriverFactory {
                 drv = new ChromeDriver(options);
                 break;
         }
+        } catch (Exception e) {
+            logger.error("Failed to initialize browser '{}'. Falling back to Chrome", browser, e);
+            ChromeOptions options = new ChromeOptions();
+            drv = new ChromeDriver(options);
+        }
 
         driver.set(drv);
+        logger.info("Driver initialized for browser: {}", browser);
     }
 
     public static void quitDriver() {

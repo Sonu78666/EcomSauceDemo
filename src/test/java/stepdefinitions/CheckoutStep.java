@@ -7,10 +7,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
 public class CheckoutStep {
+
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutStep.class);
 
     private final WebDriver driver = DriverFactory.getDriver();
     private final CheckoutPage checkoutPage = new CheckoutPage(driver);

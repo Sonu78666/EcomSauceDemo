@@ -7,7 +7,11 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.nio.file.Paths;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class TestDataManger {
+
+    private static final Logger logger = LoggerFactory.getLogger(TestDataManger.class);
 
     private static final String TEST_DATA_FILE_PATH = "src/test/resources/testdata/Data.json";
     private static Map<String, Map<String, Object>> allTestData;
@@ -20,7 +24,7 @@ public class TestDataManger {
             allTestData = gson.fromJson(reader, type);
             reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to load test data JSON", e);
             throw new RuntimeException("Failed to load test data JSON: " + e.getMessage());
         }
     }
@@ -35,7 +39,7 @@ public class TestDataManger {
     public static List<String> getListFromJson(String testCaseId, String key) {
         try {
             Object value = allTestData.get(testCaseId).get(key);
-            System.out.println("Product list fetched from JSON: " + key + " → " + value);
+            logger.info("Product list fetched from JSON: {} -> {}", key, value);
             if (value instanceof List<?>) {
                 return (List<String>) value; // safe cast due to Gson structure
             } else if (value != null) {
@@ -44,7 +48,7 @@ public class TestDataManger {
                 return gson.fromJson(gson.toJson(value), new TypeToken<List<String>>() {}.getType());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to parse list from JSON", e);
         }
 
         return Collections.emptyList();
@@ -64,7 +68,7 @@ public class TestDataManger {
                 return gson.fromJson(json, new TypeToken<Map<String, Object>>() {}.getType());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failed to parse map from JSON", e);
         }
         return Collections.emptyMap();
     }

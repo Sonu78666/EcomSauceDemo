@@ -6,12 +6,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CheckoutPage {
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutPage.class);
     private final WebDriver driver;
     private final By checkoutButton = By.xpath("//a[text()='CHECKOUT']");
     private final By firstNameField = By.id("first-name");
@@ -41,7 +44,7 @@ public class CheckoutPage {
         driver.findElement(lastNameField).sendKeys(lastName);
         driver.findElement(postalCodeField).sendKeys(postalCode);
         driver.findElement(continueButton).click();
-        System.out.println("Checkout information submitted");
+        logger.info("Checkout information submitted");
     }
 
     public boolean isOnOverviewPage() {
@@ -65,7 +68,7 @@ public class CheckoutPage {
     public void clickFinishButton() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(finishButton)).click();
-        System.out.println("Clicked on Finish button.");
+        logger.info("Clicked on Finish button.");
     }
 
     public boolean isOrderSuccessDisplayed() {

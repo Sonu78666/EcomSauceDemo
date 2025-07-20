@@ -12,10 +12,14 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
 public class Hooks {
+
+    private static final Logger logger = LoggerFactory.getLogger(Hooks.class);
 
     private static ExtentReports extent;
 
@@ -25,7 +29,7 @@ public class Hooks {
     }
     @Before
     public void setup(Scenario scenario) {
-        System.out.println("Hook is running");
+        logger.info("Hook is running");
         DriverFactory.setDriver();
         //System.out.println("Driver initialized in Hooks: " + DriverFactory.getDriver());
         WebDriver driver = DriverFactory.getDriver();

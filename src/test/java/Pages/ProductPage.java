@@ -5,12 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ProductPage {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductPage.class);
     private final WebDriver driver;
 
     public ProductPage(WebDriver driver) {
@@ -23,7 +26,7 @@ public class ProductPage {
     public void addProductToCart(String productName) {
         String xpath = CommonUtils.customizeXpath(productAddButtonXpath, productName);
         driver.findElement(By.xpath(xpath)).click();
-        System.out.println("Added product: " + productName);
+        logger.info("Added product: {}", productName);
     }
 
 
@@ -31,7 +34,7 @@ public class ProductPage {
         for (String product : productNames) {
             String xpath = CommonUtils.customizeXpath(productAddButtonXpath, product);
             driver.findElement(By.xpath(xpath)).click();
-            System.out.println("Added product: " + product);
+            logger.info("Added product: {}", product);
         }
     }
 
@@ -42,15 +45,15 @@ public class ProductPage {
             try {
                 WebElement productElement = driver.findElement(By.xpath(xpath));
                 if (!productElement.isDisplayed()) {
-                    System.out.println("Product not visible: " + product);
+                    logger.warn("Product not visible: {}", product);
                     return false;
                 }
             } catch (NoSuchElementException e) {
-                System.out.println("Product not found: " + product);
+                logger.warn("Product not found: {}", product);
                 return false;
             }
         }
-        System.out.println("All products verified successfully");
+        logger.info("All products verified successfully");
         return true;
     }
 

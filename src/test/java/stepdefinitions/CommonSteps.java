@@ -5,8 +5,12 @@ import Utils.DriverFactory;
 import Utils.PropertyUtils;
 import io.cucumber.java.en.Given;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CommonSteps {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommonSteps.class);
 
 
 
@@ -20,6 +24,6 @@ public class CommonSteps {
         String password = PropertyUtils.getValue("password");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(username, password);
-        System.out.println("User is logged in successfully");
+        logger.info("User is logged in successfully");
     }
 }
