@@ -35,6 +35,7 @@ mvn test -Denv=qa
 Additional runtime options:
 
 - `-Dbrowser=<chrome|firefox|edge|safari>` &ndash; browser to use (default `chrome`).
+- `-Dheadless=true` &ndash; run supported browsers in headless mode.
 - `-Dretry=true -DretryCount=2` &ndash; enable TestNG retry for flaky tests.
 
 After the run an HTML report is created at `reports/ExtentReport.html`.
@@ -69,6 +70,7 @@ Scenarios read their data from `src/test/resources/testdata/Data.json`:
 - **Pages** implement common actions on the site (login, adding products, cart validation, checkout).
 - **stepdefinitions** map Gherkin steps to these page actions.
 - **Utils** contains helpers like `DriverFactory` (creates the WebDriver), `PropertyUtils` (loads environment properties) and `TestDataManger` (reads the JSON test data).
+  `DriverFactory` uses WebDriverManager to download browser drivers automatically.
 
 With these pieces you can extend the feature files or add new page objects and step definitions for additional scenarios.
 

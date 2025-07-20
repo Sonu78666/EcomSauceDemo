@@ -10,6 +10,7 @@ public class LoginPage {
     private final By passwordField=By.xpath("//input[@id='password']");
     private final By loginButton=By.xpath("//input[@id='login-button']");
     private final By productTitle = By.xpath("//div[@class='product_label']");
+    private final By errorMessage = By.cssSelector("[data-test='error']");
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -28,6 +29,11 @@ public class LoginPage {
 
     public String getProductPageTitle() {
         return driver.findElement(productTitle).getText();
+    }
+
+    public boolean isErrorMessageDisplayed() {
+        return !driver.findElements(errorMessage).isEmpty()
+                && driver.findElement(errorMessage).isDisplayed();
     }
 }
 
