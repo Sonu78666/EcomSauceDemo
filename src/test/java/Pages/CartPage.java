@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CartPage {
+    private static final Logger logger = LoggerFactory.getLogger(CartPage.class);
     private final WebDriver driver;
 
     public CartPage(WebDriver driver) {
@@ -26,7 +29,7 @@ public class CartPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement icon = wait.until(ExpectedConditions.elementToBeClickable(cartIcon));
         icon.click();
-        System.out.println("Clicked on cart icon.");
+        logger.info("Clicked on cart icon.");
     }
 
     public Map<String, Double> getCartItemsWithPrices() {
@@ -46,7 +49,7 @@ public class CartPage {
             Map<String, Double> actualData = getCartItemsWithPrices();
 
             if (actualData.size() != expectedData.size()) {
-                System.out.println("Mismatch in item count");
+                logger.warn("Mismatch in item count");
                 return false;
             }
 
@@ -55,18 +58,17 @@ public class CartPage {
                 Double expectedPrice = entry.getValue();
 
                 if (!actualData.containsKey(expectedProduct)) {
-                    System.out.println("Missing product: " + expectedProduct);
+                    logger.warn("Missing product: {}", expectedProduct);
                     return false;
                 }
 
                 if (!actualData.get(expectedProduct).equals(expectedPrice)) {
-                    System.out.println("Price mismatch for " + expectedProduct +
-                            " — Expected: " + expectedPrice + ", Found: " + actualData.get(expectedProduct));
+                    logger.warn("Price mismatch for {} — Expected: {}, Found: {}", expectedProduct, expectedPrice, actualData.get(expectedProduct));
                     return false;
                 }
             }
 
-            System.out.println("Cart contents matched with expected data.");
+            logger.info("Cart contents matched with expected data.");
             return true;
         }
 }
